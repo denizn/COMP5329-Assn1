@@ -1,6 +1,7 @@
 import time
 import h5py
-import mlp
+from mlp import *
+import numpy as np
 
 with h5py.File('input/train_128.h5','r') as H:
     data = np.copy(H['data'])
