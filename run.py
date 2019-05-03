@@ -9,13 +9,13 @@ with h5py.File('input/train_label.h5','r') as H:
     label = np.copy(H['label'])
 
 # INITIALIZE MLP WITH BEST PERFORMING ARCHITECTURE
-mlp = MLP([128, 256, 256, 10],activation=[None, 'ReLU', 'ReLU','softmax'], dropout=[0.3, 0.3, 0.0, 0])
+mlp = MLP([128, 256, 64, 10],activation=[None, 'ReLU', 'ReLU','softmax'], dropout=[0.1, 0.1, 0.0, 0])
 
 # START TIMING
 start = time.time()
 
 # CHECKPOINT MODEL AND KEEP RECORD OF 
-losses_desc256, accuracies_train_desc256, accuracies_test_desc256 = mlp.model_checkpointer(data, label, batch_size=32, momentum=0.9, learning_rate=0.0001,epochs=80)
+losses_desc256, accuracies_train_desc256, accuracies_test_desc256 = mlp.model_checkpointer(data, label, batch_size=32, momentum=0.9, learning_rate=0.0001,epochs=50)
 
 end = time.time()
 # END TIMING
