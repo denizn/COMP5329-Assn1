@@ -4,10 +4,24 @@ from ipywidgets import interact, widgets
 from matplotlib import animation
 import matplotlib.pyplot as plt
 import pandas as pd
-from sklearn.model_selection import train_test_split
+#from sklearn.model_selection import train_test_split
 import h5py
 import copy
 import time
+
+def train_test_split(X, y, test_size=0.20):
+    X=np.array(X)
+    y=np.array(y)
+    idxs = np.arange(X.shape[0])
+    np.random.shuffle(idxs)
+    train_idxs = idxs[0:round(((1-test_size)*X.shape[0]))]
+
+    X_train = X[train_idxs]
+    y_train = y[train_idxs]
+    X_test =  X[~train_idxs]
+    y_test = y[~train_idxs]
+
+    return X_train, X_test, y_train, y_test
 
 class StandardScaler(object):
     def __init__(self):
@@ -390,7 +404,7 @@ class MLP:
         X=np.array(X)
         y=np.array(y)
         y_dummies = np.array(pd.get_dummies(y))
-        X_train, X_val, y_train, y_val = train_test_split(X, y_dummies, test_size=test_size, shuffle=True)
+        X_train, X_val, y_train, y_val = train_test_split(X, y_dummies, test_size=test_size)
         scaler = StandardScaler()
         #scaler = Normalizer()
         #scaler = MinMaxScaler()
